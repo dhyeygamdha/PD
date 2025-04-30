@@ -32,7 +32,8 @@ A **cross-platform Python** orchestrator to automate installation and execution 
 ---
 
 ## 🚀 Installation
-
+ Linux 
+ 
 ```bash
 # Clone the repo
 git clone https://github.com/SnB0y/PD.git
@@ -41,6 +42,9 @@ cd PD
 # Make the script executable
 chmod +x PD.py
 ```
+Windows 
+
+Download PD.py 
 
 ---
 

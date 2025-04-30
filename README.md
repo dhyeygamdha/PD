@@ -1,6 +1,6 @@
-# PD Recon Orchestrator
+# PD
 
-A **cross-platform Python** script to automate installation and execution of ProjectDiscovery reconnaissance tools:
+A **cross-platform Python** orchestrator to automate installation and execution of ProjectDiscovery reconnaissance tools:
 
 - **Bootstraps Go** (if missing) on Linux or Windows  
 - **Installs** Subfinder, HTTPX, URLFinder, Nuclei + Nuclei-Templates  
@@ -34,9 +34,93 @@ A **cross-platform Python** script to automate installation and execution of Pro
 ## 🚀 Installation
 
 ```bash
-# Clone the repo (or download pd_enum_installer.py directly)
-git clone https://github.com/SnB0y/pd.git
-cd pd 
+# Clone the repo
+git clone https://github.com/SnB0y/PD.git
+cd PD
 
 # Make the script executable
-chmod +x pd.py
+chmod +x PD.py
+```
+
+---
+
+## ⚡️ Tool Bootstrap
+
+Install Go (if missing) and all ProjectDiscovery tools + Nuclei templates:
+
+```bash
+python3 PD.py --install-tools
+```
+
+This will:
+
+1. Check for `go version`.  
+2. Install Go via `curl`/tarball (Linux) or Chocolatey (Windows).  
+3. `go install` Subfinder, HTTPX, URLFinder, Nuclei.  
+4. Fetch the latest Nuclei-Templates (`nuclei -update-templates`).  
+5. Inject your Go workspace’s `bin/` into the script’s `PATH`.
+
+---
+
+## 🎯 Usage
+
+### Single Domain
+
+```bash
+python3 PD.py --domain example.com
+```
+
+### Multiple Domains
+
+Create `domains.txt` (one domain per line), then:
+
+```bash
+python3 PD.py --domains domains.txt
+```
+
+---
+
+## 📂 Output Structure
+
+After enumeration, you’ll find:
+
+```
+output/
+└── example.com/
+    ├── subfinder.txt    # Discovered subdomains
+    ├── httpx.txt        # Hosts with HTTP/S services
+    ├── urlfinder.txt    # Extracted URLs
+    └── nuclei.txt       # Vulnerabilities found by Nuclei
+```
+
+---
+
+## 🛠️ Customize & Extend
+
+- **Nuclei filters**: add `-severity`, `-tags`, or custom templates.  
+- **Concurrency**: tweak `-c` flags for HTTPX, Nuclei, etc.  
+- **Integrations**: pipe outputs into your CI/CD, dashboards, or notification bots.  
+- **Re-enable**: bring back Katana or Naabu stages by uncommenting or re-adding their blocks.
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+---
+
+## 🤝 Contributing
+
+1. Fork it!  
+2. Create your feature branch: `git checkout -b feature/awesome`  
+3. Commit your changes: `git commit -m "Add awesome feature"`  
+4. Push to your branch: `git push origin feature/awesome`  
+5. Open a Pull Request.
+
+---
+
+## 🙏 Acknowledgements
+
+- [ProjectDiscovery](https://github.com/projectdiscovery) for the tools & templates  
+- The open-source community for ongoing security research inspiration  

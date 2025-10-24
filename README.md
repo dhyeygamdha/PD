@@ -37,7 +37,7 @@ Before you begin, ensure you have the following installed:
 2. **Install Required Tools**:
    The orchestrator will automatically install the necessary tools for you. Simply run:
    ```bash
-   python orchestrator.py
+   python .py
    ```
 
 3. **Run the Recon Pipeline**:

